@@ -57,7 +57,7 @@ setup(
     install_requires=install_requires,
     entry_points={
         'certbot.plugins': [
-            'dns-vctdns = certbot_dns_vctdns.dns_vctdns:Authenticator',
+            'dns-do-vct = certbot_dns_do_vct.dns_do_vct:Authenticator',
         ],
     },
 )

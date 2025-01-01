@@ -57,7 +57,8 @@ Examples
 
    certbot certonly \\
      --authenticator dns-do-vct \\
-     --dns-do-credentials ~/.secrets/certbot/do.ini \\
+     --dns-do-credentials ~/.secrets/do.ini \\
      --dns-do-jump-domain jump.domain \\
      -d example.com
 """
+

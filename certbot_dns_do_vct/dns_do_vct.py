@@ -27,18 +27,18 @@ class Authenticator(dns_common.DNSAuthenticator):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.credentials: Optional[CredentialsConfiguration] = None
-        self.jump_domain: Optional[str] = None
+
 
     @classmethod
     def add_parser_arguments(cls, add: Callable[..., None],
-                             default_propagation_seconds: int = 10) -> None:
+                             default_propagation_seconds: int = 10 ) -> None:
         super().add_parser_arguments(add, default_propagation_seconds)
         add('credentials', help='DigitalOcean credentials INI file.')
         add('dns-do-jump-domain', help='Jump domain for DNS validation', required=True)
 
     def more_info(self) -> str:
         return 'This plugin configures a DNS TXT record to respond to a dns-01 challenge using ' + \
-               'the DigitalOcean API.'
+               'the DigitalOcean API as a jump domain.'
 
     def _setup_credentials(self) -> None:
         self.credentials = self._configure_credentials(
@@ -48,9 +48,7 @@ class Authenticator(dns_common.DNSAuthenticator):
                 'token': 'API token for DigitalOcean account'
             }
         )
-        self.jump_domain = self.conf('dns-do-jump-domain')
-        if not self.jump_domain:
-            raise errors.PluginError("Jump domain must be specified using --dns-do-jump-domain")
+       
 
     def _perform(self, domain: str, validation_name: str, validation: str) -> None:
         name = f"{validation_name}-{domain.replace('.', '-')}"
