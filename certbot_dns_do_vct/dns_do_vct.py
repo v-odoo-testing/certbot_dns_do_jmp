@@ -27,14 +27,14 @@ class Authenticator(dns_common.DNSAuthenticator):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.credentials: Optional[CredentialsConfiguration] = None
-
+        self.jump_domain: Optional[str] = None
 
     @classmethod
     def add_parser_arguments(cls, add: Callable[..., None],
                              default_propagation_seconds: int = 10 ) -> None:
         super().add_parser_arguments(add, default_propagation_seconds)
         add('credentials', help='DigitalOcean credentials INI file.')
-        add('dns-do-jump-domain', help='Jump domain for DNS validation', required=True)
+        add('jump-domain', help='Jump domain for DNS validation', required=True)
 
     def more_info(self) -> str:
         return 'This plugin configures a DNS TXT record to respond to a dns-01 challenge using ' + \
@@ -48,10 +48,12 @@ class Authenticator(dns_common.DNSAuthenticator):
                 'token': 'API token for DigitalOcean account'
             }
         )
-       
+        self.jump_domain = self.conf('jump-domain')
+        print(f"Jump domain: {self.jump_domain}")
 
     def _perform(self, domain: str, validation_name: str, validation: str) -> None:
-        name = f"{validation_name}-{domain.replace('.', '-')}"
+        name = f"{validation_name.replace('.', '-')}.{self.jump_domain}"
+        logger.debug(f"Adding TXT record for {self.jump_domain} with name {name} and content {validation}")
         self._get_digitalocean_client().add_txt_record(self.jump_domain, name, validation,
                                                        self.ttl)
 
@@ -59,7 +61,7 @@ class Authenticator(dns_common.DNSAuthenticator):
         if not self.credentials:  # pragma: no cover
             raise errors.Error("Plugin has not been prepared.")
         
-        name = f"{validation_name}-{domain.replace('.', '-')}"
+        name = f"{validation_name.replace('.', '-')}.{self.jump_domain}"
         self._get_digitalocean_client().del_txt_record(self.jump_domain, name, validation)
 
     def _get_digitalocean_client(self) -> "_DigitalOceanClient":
@@ -88,7 +90,7 @@ class _DigitalOceanClient:
         :raises certbot.errors.PluginError: if an error occurs communicating with the DigitalOcean
                                             API
         """
-
+        logger.debug(f"prepare to add TXT record for {domain_name} with name {record_name} and content {record_content}")
         try:
             domain = self._find_domain(domain_name)
             # The TTL value is set to the SOA record's TTL. Unless set to a falsy value,
@@ -172,7 +174,6 @@ class _DigitalOceanClient:
         domain_name_guesses = dns_common.base_domain_name_guesses(domain_name)
 
         domains = self.manager.get_all_domains()
-
         for guess in domain_name_guesses:
             matches = [domain for domain in domains if domain.name == guess]
 
@@ -187,4 +188,5 @@ class _DigitalOceanClient:
     @staticmethod
     def _compute_record_name(domain: digitalocean.Domain, full_record_name: str) -> str:
         # The domain, from DigitalOcean's point of view, is automatically appended.
-        return full_record_name.rpartition("." + domain.name)[0]
+        computed_record_name = full_record_name.rpartition("." + domain.name)[0]
+        return computed_record_name

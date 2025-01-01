@@ -62,6 +62,36 @@ The following arguments are supported:
 * `--dns-do-vct-credentials`: Path to DigitalOcean credentials INI file (Required)
 * `--dns-do-vct-propagation-seconds`: The number of seconds to wait for DNS to propagate before asking the ACME server to verify the DNS record (Default: 30)
 
+## test example
+
+```bash
+certbot certonly \
+   --config-dir /root/cert/le --work-dir /root/cert/work --logs-dir /root/cert/log \
+   --authenticator dns-do-vct \
+   --dns-do-vct-credentials ~/.secrets/do.ini \
+   --dns-do-vct-jump-domain  gioxa.com \
+   -d deployctl.com -d *.deployctl.com
+```
+
+```bash
+Requesting a certificate for deployctl.com and *.deployctl.com
+Jump domain: gioxa.com
+Waiting 10 seconds for DNS changes to propagate
+
+Successfully received certificate.
+Certificate is saved at: /root/cert/le/live/deployctl.com/fullchain.pem
+Key is saved at:         /root/cert/le/live/deployctl.com/privkey.pem
+This certificate expires on 2025-04-01.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
 ## License
 
 This plugin is licensed under the Apache License 2.0.
