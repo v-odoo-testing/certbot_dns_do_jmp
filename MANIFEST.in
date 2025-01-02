@@ -1,6 +1,6 @@
 include LICENSE
 include README.md
 recursive-include docs *
-include certbot_dns_do_vct/py.typed
+include certbot_dns_do_jmp/py.typed
 global-exclude __pycache__
 global-exclude *.py[cod]

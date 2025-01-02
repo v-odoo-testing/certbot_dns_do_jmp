@@ -23,9 +23,9 @@ else:
     ])
 
 setup(
-    name='certbot-dns-do-vct',
+    name='certbot-dns-do-jmp',
     version=version,
-    description="DNS-VCT JUMP DOMAIN Digitalocean DNS Authenticator plugin for Certbot",
+    description="DNS Jump Domain Digitalocean DNS Authenticator plugin for Certbot",
     url='https://github.com/v-odoo-testing/certbot_dns_do_vct',
     author="Danny Goossen",
     author_email='danny@v-consulting.biz',
@@ -57,7 +57,7 @@ setup(
     install_requires=install_requires,
     entry_points={
         'certbot.plugins': [
-            'dns-do-vct = certbot_dns_do_vct.dns_do_vct:Authenticator',
+            'dns-do-jmp = certbot_dns_do_jmp.dns_do_jmp:Authenticator',
         ],
     },
 )

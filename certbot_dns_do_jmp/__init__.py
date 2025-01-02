@@ -1,5 +1,5 @@
 """
-The `~certbot_dns_do_vct.dns_do_vct` plugin automates the process of
+The `~certbot_dns_do_jmp.dns_do_jmp` plugin automates the process of
 completing a ``dns-01`` challenge by creating, and subsequently removing, TXT records using
 the DigitalOcean API with a jump domain approach by adding a CNAME record for the target domain `_acme-challenge.example.com` pointing to`_acme-challenge.example.com`
 pointing to `_acme-challenge-example-com.jump.domain`, where `jump.domain` is the jump domain specified in the plugin configuration.
@@ -9,15 +9,15 @@ In this way we can authenticate with unknown dns servers with our digital ocean 
 .. note::
    The plugin is not installed by default. It can be installed using pip:
 
-   ``pip install certbot-dns-do-vct``
+   ``pip install certbot-dns-do-jmp``
 
 Named Arguments
 --------------
 
 ========================================  =====================================
-``--dns-do-credentials``                  DigitalOcean credentials_ INI file.
+``--dns-do-jmp-credentials``                  DigitalOcean credentials_ INI file.
                                          (Required)
-``--dns-do-jump-domain``                 Jump domain for DNS validation.
+``--dns-do-jmp-jump-domain``                 Jump domain for DNS validation.
                                          (Required)
 ``--dns-do-propagation-seconds``         The number of seconds to wait for DNS
                                          to propagate before asking the ACME
@@ -56,9 +56,9 @@ Examples
 .. code-block:: bash
 
    certbot certonly \\
-     --authenticator dns-do-vct \\
-     --dns-do-credentials ~/.secrets/do.ini \\
-     --dns-do-jump-domain jump.domain \\
+     --authenticator dns-do-jmp \\
+     --dns-do-jmp-credentials ~/.secrets/do.ini \\
+     --dns-do-jmp-jump-domain jump.domain \\
      -d example.com
 """
 
