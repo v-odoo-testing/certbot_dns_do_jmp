@@ -4,7 +4,7 @@ import sys
 from setuptools import find_packages
 from setuptools import setup
 
-version = '2.9.0'
+version = '0.0.1'
 
 install_requires = [
     'python-digitalocean>=1.11',
@@ -18,8 +18,8 @@ else:
         # We specify the minimum acme and certbot version as the current plugin
         # version for simplicity. See
         # https://github.com/certbot/certbot/issues/8761 for more info.
-        f'acme>={version}',
-        f'certbot>={version}',
+        f'acme>=2.9.0',
+        f'certbot>=2.9.0',
     ])
 
 setup(
