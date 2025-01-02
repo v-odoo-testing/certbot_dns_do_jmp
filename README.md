@@ -1,5 +1,7 @@
 # DO DNS Jump Domain Authenticator plugin for Certbot
 
+[![Publish to GitHub Release](https://github.com/v-odoo-testing/certbot_dns_do_jmp/actions/workflows/publish-release.yml/badge.svg)](https://github.com/v-odoo-testing/certbot_dns_do_jmp/actions/workflows/publish-release.yml)
+
 A certbot DNS authenticator plugin for DigitalOcean DNS for another jump domain.
 
 ## Installation
