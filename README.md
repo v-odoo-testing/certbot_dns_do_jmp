@@ -1,11 +1,11 @@
-# DO VCT DNS Authenticator plugin for Certbot
+# DO DNS Jump Domain Authenticator plugin for Certbot
 
-A certbot DNS authenticator plugin for DigitalOcean DNS for another domain.
+A certbot DNS authenticator plugin for DigitalOcean DNS for another jump domain.
 
 ## Installation
 
 ```bash
-pip install certbot-dns-do-vct
+pip install certbot-dns-do-jmp
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ Save your DigitalOcean API credentials to a file (e.g. `~/do-credentials.ini`) w
 
 ```bash
  # DigitalOcean API credentials used by Certbot
-   dns_do_token = 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+   dns_do_jmp_token = 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
 ```
 
 ### Obtaining Certificates
@@ -31,9 +31,9 @@ To obtain a certificate using this plugin:
 
 ```bash
 certbot certonly \
-  --authenticator dns-do-vct \
-  --dns-do-credentials ~/.secrets/do.ini \
-  --dns-do-jump-domain jump.domain \
+  --authenticator dns-do-jmp \
+  --dns-do-jmp-credentials ~/.secrets/do.ini \
+  --dns-do-jmp-jump-domain jump.domain \
   -d example.com
 ```
 
@@ -41,7 +41,7 @@ this requires a ~/.secrets/do.ini file with the following format:
 
 ```bash
 # DigitalOcean API credentials used by Certbot
-dns_do_token = 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+dns_do_jmp_token = 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
 ```
 
 and a CNAME record on the target domain:
@@ -58,18 +58,18 @@ TXT RECORD TTL: 60
 
 The following arguments are supported:
 
-* `--dns-do-jump-domain jump.domain`: The domain to use for the CNAME record (Required)
-* `--dns-do-vct-credentials`: Path to DigitalOcean credentials INI file (Required)
-* `--dns-do-vct-propagation-seconds`: The number of seconds to wait for DNS to propagate before asking the ACME server to verify the DNS record (Default: 30)
+* `--dns-do-jmp-jump-domain jump.domain`: The domain to use for the CNAME record (Required)
+* `--dns-do-jmp-credentials`: Path to DigitalOcean credentials INI file (Required)
+* `--dns-do-jmp-propagation-seconds`: The number of seconds to wait for DNS to propagate before asking the ACME server to verify the DNS record (Default: 30)
 
 ## test example
 
 ```bash
 certbot certonly \
    --config-dir /root/cert/le --work-dir /root/cert/work --logs-dir /root/cert/log \
-   --authenticator dns-do-vct \
-   --dns-do-vct-credentials ~/.secrets/do.ini \
-   --dns-do-vct-jump-domain  gioxa.com \
+   --authenticator dns-do-jmp \
+   --dns-do-jmp-credentials ~/.secrets/do.ini \
+   --dns-do-jmp-jump-domain  gioxa.com \
    -d deployctl.com -d *.deployctl.com
 ```
 
@@ -94,4 +94,4 @@ If you like Certbot, please consider supporting our work by:
 
 ## License
 
-This plugin is licensed under the Apache License 2.0.
+This plugin is licensed under the MIT License.

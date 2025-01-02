@@ -15,11 +15,11 @@ Named Arguments
 --------------
 
 ========================================  =====================================
-``--dns-do-jmp-credentials``                  DigitalOcean credentials_ INI file.
+``--dns-do-jmp-credentials``             DigitalOcean credentials_ INI file.
                                          (Required)
-``--dns-do-jmp-jump-domain``                 Jump domain for DNS validation.
+``--dns-do-jmp-jump-domain``             Jump domain for DNS validation.
                                          (Required)
-``--dns-do-propagation-seconds``         The number of seconds to wait for DNS
+``--dns-do-jmp-propagation-seconds``     The number of seconds to wait for DNS
                                          to propagate before asking the ACME
                                          server to verify the DNS record.
                                          (Default: 10)
@@ -37,7 +37,7 @@ credentials, obtained from your DigitalOcean account.
    :caption: Example credentials file:
 
    # DigitalOcean API credentials used by Certbot
-   dns_do_token = 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+   dns_do_jmp_token = 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
 
 DNS Validation Process
 --------------------
